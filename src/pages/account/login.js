@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
-import { useLogin } from "@hooks/useLogin.hook";
 import { useLoginFormValidation } from "@hooks/formValidations/loginFormValidation.schema";
 
 import Input from "@components/Input/Input";
@@ -9,9 +8,8 @@ import Button from "@components/Button/Button";
 import Layout from "@components/Layout/Layout";
 
 export default function Login() {
-  const { mutate, isLoading } = useLogin();
   const onSubmitHandler = (values) => {
-    mutate(values);
+    console.log(values);
   };
 
   const formik = useLoginFormValidation(onSubmitHandler);
@@ -26,7 +24,7 @@ export default function Login() {
     <div className="w-full bg-transparent overflow-hidden select-none  z-2">
       <Layout
         pageMeta={{
-          title: "Login to Jawnchuks shop - find cool gadgets for sale",
+          title: "Login to Jawn's Gizmo - find cool gadgets for sale",
           description: "give any description here",
         }}
       >

@@ -26,7 +26,7 @@ export default function PasswordReset() {
     <div className="w-full bg-transparent overflow-hidden select-none  z-2">
       <Layout
         pageMeta={{
-          title: "Login to Jawnchuks shop - find cool gadgets for sale",
+          title: "Reset your password",
           description: "give any description here",
         }}
       >

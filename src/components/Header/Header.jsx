@@ -1,9 +1,13 @@
-import MenuDropdown from "@components/Dropdown/MenuDropdown/MenuDropdown";
-import AccountDropdown from "@components/Dropdown/AccountDropdown/AccountDropdown";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
+
+// import { useUserCredentialsStore } from "@store/authStore.store";
+// import shallow from "zustand/shallow";
+
 import CartDropdown from "@components/Dropdown/CartDropdown/CartDropdown";
 import SearchDropdown from "@components/Dropdown/SearchDropdown/SearchDropdown";
+import MenuDropdown from "@components/Dropdown/MenuDropdown/MenuDropdown";
+import AccountDropdown from "@components/Dropdown/AccountDropdown/AccountDropdown";
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -33,6 +37,14 @@ const Header = () => {
         ? "hidden"
         : "auto";
   }, [showMenu, showAccountDropdown, showCartDropdown, showSearchDropdown]);
+
+  // const { isAuthenticated, userDetails } = useUserCredentialsStore(
+  //   (state) => ({
+  //     isAuthenticated: state.isAuthenticated,
+  //     userDetails: state.userDetails,
+  //   }),
+  //   shallow
+  // );
 
   return (
     <header className="w-full fixed top-0 bg-white  z-20 flex flex-col">
@@ -81,7 +93,7 @@ const Header = () => {
           <div className="col-span-2 justify-self-center text-center">
             <Link href="/">
               <a className="w-full lg:text-3xl text-xl lg:font-normal font-extrabold text-black text-opacity-80 uppercase ">
-                Shop with jawnchuks
+                Jawn&apos;s Gizmo
               </a>
             </Link>
           </div>

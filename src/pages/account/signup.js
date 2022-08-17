@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React, { useState } from "react";
 
-import { useCreateUser } from "@hooks/useCreateUser.hook";
 import { useUserSignupFormValidation } from "@hooks/formValidations/userSignupFormValidation.schema";
 
 import Input from "@components/Input/Input";
@@ -9,9 +8,8 @@ import Button from "@components/Button/Button";
 import Layout from "@components/Layout/Layout";
 
 export default function Signup() {
-  const { mutate, isLoading } = useCreateUser();
   const onSubmitHandler = (values) => {
-    mutate(values);
+    console.log(values);
   };
 
   const formik = useUserSignupFormValidation(onSubmitHandler);
@@ -27,7 +25,7 @@ export default function Signup() {
       <div className="w-full bg-transparent overflow-hidden select-none  z-2">
         <Layout
           pageMeta={{
-            title: "Signup to Jawnchuks shop - find cool gadgets for sale",
+            title: "Signup to Jawn's Gizmo - find cool gadgets for sale",
             description: "give any description here",
           }}
         >

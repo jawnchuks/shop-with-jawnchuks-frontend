@@ -1,25 +1,49 @@
-import { QueryClientProvider } from "react-query";
 import "@styles/globals.css";
-import { Hydrate } from "react-query/hydration";
-import { useQueryClientAndsettings } from "@config/queryClient";
-import { ReactQueryDevtools } from "react-query/devtools";
-import PropTypes from "prop-types";
 
-function MyApp({ Component, pageProps }) {
-  const { queryClient } = useQueryClientAndsettings();
+/* global process */
+import React, { useEffect, useState } from "react";
+// import '../style/scss/style.scss';
+import { useStore } from "@store/index";
+import { Provider } from "react-redux";
+import commerce from "@libs/commerce";
+// import { loadStripe } from '@stripe/stripe-js';
+import { setCustomer } from "@store/actions/authenticateActions";
+// import 'swiper/components/effect-fade/effect-fade.scss';
+
+const MyApp = ({ Component, pageProps }) => {
+  const store = useStore(pageProps.initialState);
+  const [stripePromise, setStripePromise] = useState(null);
+
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
+      // has API key
+      setStripePromise(
+        loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
+      );
+    }
+
+    store.dispatch(setCustomer());
+
+    commerce.products.list().then((res) => {
+      store.dispatch({
+        type: "STORE_PRODUCTS",
+        payload: res.data,
+      });
+    });
+
+    commerce.categories.list().then((res) => {
+      store.dispatch({
+        type: "STORE_CATEGORIES",
+        payload: res.data,
+      });
+    });
+  }, [store]);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <Component {...pageProps} />
-      </Hydrate>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <Component {...pageProps} stripe={stripePromise} />
+    </Provider>
   );
-}
-
-MyApp.propTypes = {
-  Component: PropTypes.elementType.isRequired,
-  pageProps: PropTypes.object,
 };
 
 export default MyApp;

@@ -11,7 +11,7 @@ export default function Home() {
     <div className="w-full bg-transparent overflow-hidden select-none  z-2">
       <Layout
         pageMeta={{
-          title: "Shop with Jawnchuks - find cool gadgets for sale",
+          title: "Jawn's Gizmo - find cool gadgets for sale",
           description: "give any description here",
         }}
       >

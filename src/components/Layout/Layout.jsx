@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 const Layout = ({ children, pageMeta }) => {
   const meta = {
-    title: "Shop with jawnchuks",
+    title: "Jawn's Gizmo",
     description: "Find quality gadgets here",
     type: "website",
     ...pageMeta,
