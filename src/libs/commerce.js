@@ -1,12 +1,8 @@
-// import CommerceSDK from "@chec/commerce.js";
+import Commerce from "@chec/commerce.js";
 
-// const client = new CommerceSDK(process.env.NEXT_PUBLIC_CHEC_PUBLIC_KEY);
-
-// export default client;
-
-import { Commerce } from "@chec/commerce.js";
-
-const checAPIKey = process.env.NEXT_PUBLIC_CHEC_PUBLIC_KEY;
+const checAPIKey =
+  process.env.NEXT_PUBLIC_CHEC_PUBLIC_KEY ||
+  "pk_3879278d8120ffa7f4b0c99ff1df9d5d16377af8e9747";
 const devEnvironment = process.env.NODE_ENV === "development";
 
 const commerceConfig = {
