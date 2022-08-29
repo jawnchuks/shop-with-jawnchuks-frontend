@@ -158,7 +158,7 @@ export default function Login() {
               className="bg-black text-lg lg:text-xl font-semibold hover tracking-wider  text-white py-4 px-4"
               type="submit"
             >
-              {isLoading ? "Logging you in..." : "Login"}
+              login
             </Button>
             <p className="mt-4 text-center  text-lg lg:text-xl text-light-black font-medium ">
               Don&apos;t have an account yet?{" "}

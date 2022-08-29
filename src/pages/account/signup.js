@@ -218,7 +218,7 @@ export default function Signup() {
                 className="bg-black mt-12 text-lg lg:text-xl font-semibold hover tracking-wider  text-white py-4 px-4"
                 type="submit"
               >
-                {isLoading ? "Creating your account..." : "Create account"}
+                Create account
               </Button>
 
               <p className="text-center mt-4 text-lg lg:text-xl text-light-black font-medium ">
