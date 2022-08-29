@@ -4,7 +4,7 @@
 
 // export default client;
 
-import Commerce from "@chec/commerce.js";
+import { Commerce } from "@chec/commerce.js";
 
 const checAPIKey = process.env.NEXT_PUBLIC_CHEC_PUBLIC_KEY;
 const devEnvironment = process.env.NODE_ENV === "development";
