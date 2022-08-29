@@ -1,5 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+
+import GiftCards from "@assets/images/gift-card.png";
+import Repairs from "@assets/images/repairs.jpg";
 
 const Stores = () => {
   return (
@@ -7,7 +11,15 @@ const Stores = () => {
       <div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 justify-items-stretch">
           <div className="w-full flex flex-col ">
-            <span className="bg-secondary h-[15rem] lg:h-[30rem]"></span>
+            <span className="">
+              <Image
+                className="w-fit"
+                src={Repairs}
+                width={600}
+                height={600}
+                alt=""
+              />
+            </span>
             <h3 className="my-2 lg:text-xl text-lg font-extrabold">
               Gadget Repairs
             </h3>
@@ -25,7 +37,15 @@ const Stores = () => {
           </div>
 
           <div className="flex flex-col">
-            <span className="bg-secondary h-[15rem] lg:h-[30rem]"></span>
+            <span className="">
+              <Image
+                className="w-fit"
+                src={GiftCards}
+                width={600}
+                height={600}
+                alt=""
+              />
+            </span>
             <h3 className="my-2 lg:text-xl text-lg font-extrabold">
               Gift Cards
             </h3>

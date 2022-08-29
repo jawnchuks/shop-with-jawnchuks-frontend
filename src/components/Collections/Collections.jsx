@@ -1,81 +1,71 @@
-import React, { Component } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Head from "next/head";
 import { connect } from "react-redux";
 import ProductCard from "@components/Products/ProductCard/ProductCard";
 
-class Collections extends Component {
-  constructor(props) {
-    super(props);
+const Collections = (props) => {
+  const sidebar = createRef();
+  const page = createRef();
+  const scrollRef = createRef(null);
 
-    this.sidebar = React.createRef();
-    this.page = React.createRef();
+  const scroll = (scrollOffset) => {
+    scrollRef.current.scrollLeft += scrollOffset;
+  };
+  useEffect(() => {
+    const handleScroll = (props) => {
+      const animate = () => {
+        if (!page.current) {
+          return;
+        }
 
-    this.handleScroll = this.handleScroll.bind(this);
-  }
+        const distance =
+          page.current.getBoundingClientRect().bottom - window.innerHeight;
 
-  componentDidMount() {
-    window.addEventListener("scroll", this.handleScroll);
-  }
+        if (distance < 0) {
+          sidebar.current.style.transform = `translateY(${distance}px)`;
+        } else {
+          sidebar.current.style.transform = "translateY(0px)";
+        }
+      };
 
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
-  }
-
-  handleScroll() {
-    const animate = () => {
-      if (!this.page.current) {
-        return;
-      }
-
-      const distance =
-        this.page.current.getBoundingClientRect().bottom - window.innerHeight;
-
-      if (distance < 0) {
-        this.sidebar.current.style.transform = `translateY(${distance}px)`;
-      } else {
-        this.sidebar.current.style.transform = "translateY(0px)";
-      }
+      window.requestAnimationFrame(animate);
     };
 
-    window.requestAnimationFrame(animate);
-  }
+    window.addEventListener("scroll", handleScroll);
 
-  renderSidebar() {
-    const { categories } = this.props;
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [page, sidebar]);
+
+  const renderSidebar = () => {
+    const { categories } = props;
 
     return (
-      <>
+      <div className="w-full hidden lg:flex flex-col px-4 lg:px-8 py-4 ">
         {categories.map((category) => (
-          <div key={category.id} className="custom-container">
-            <div className="flex flex-row">
-              <div className="flex-1 block relative">
-                <p className="text-xl font-medium mb-3">{category.name}</p>
-                <Link href={`/collection#${category.slug}`}>
-                  <a className="mb-5 text-black">
-                    <div className="flex">
-                      <p className="mb-2 relative cursor-pointer">
-                        Products
-                        <span className="absolute top-5 right-10 font-size-tiny text-right">
-                          {category.products}
-                        </span>
-                      </p>
-                    </div>
-                  </a>
-                </Link>
-              </div>
-            </div>
+          <div key={category.id} className="my-1">
+            <Link href={`/collection/${category.slug}`}>
+              <a className=" flex flex-row items-center justify-between text-black">
+                <span className="hover-underline-animation text-lg font-bold capitalize ">
+                  {category.name}
+                </span>
+                {/* <span className="text-xs text-secondary w-5 h-5 rounded-full font-semibold bg-black bg-opacity-60 text-center">
+                  {category.products}
+                </span> */}
+              </a>
+            </Link>
           </div>
         ))}
-      </>
+      </div>
     );
-  }
+  };
 
   /**
    * Filter products by category
    */
-  filterProductsByCat(catSlug) {
-    const { categories, products } = this.props;
+  const filterProductsByCat = (catSlug) => {
+    const { categories, products } = props;
 
     const cat = categories.find((category) => category.slug === catSlug);
     if (!cat) {
@@ -86,67 +76,119 @@ class Collections extends Component {
         (productCategory) => productCategory.id === cat.id
       )
     );
-  }
+  };
 
   /**
    * Render collections based on categories available in data
    */
-  renderCollection() {
-    const { categories } = this.props;
+  const renderCollection = () => {
+    const { categories } = props;
     const reg = /(<([^>]+)>)/gi;
 
     return (
-      <div className="collection">
+      <div className=" px-2">
         {categories.map((category) => (
-          <div key={category.id}>
-            <p className="text-2xl font-medium mb-4" id={category.slug}>
-              {category.name}
-            </p>
-            <div className="flex flex-1 mb-5 collection-1">
-              {this.filterProductsByCat(category.slug).map((product) => (
-                <div key={product.id} className="grid grid-cols-3">
-                  <ProductCard
-                    permalink={product.permalink}
-                    image={product.image.url}
-                    name={product.name}
-                    price={product.price.formatted_with_symbol}
-                    description={
-                      product.description &&
-                      product.description.replace(reg, "")
-                    }
-                    soldOut={product.is.sold_out}
-                  />
-                </div>
-              ))}
+          <div key={category.id} className="">
+            <div className="flex flex-row items-center justify-between px-2 py-4">
+              <Link href={`/collection/${category.slug}`}>
+                <a
+                  className="lg:text-2xl text-lg tracking-wide font-bold uppercase"
+                  id={category.slug}
+                >
+                  {category.name}
+                </a>
+              </Link>
+
+              <div className=" text-md lg:text-xl flex text-black flex-row items-center justify-end">
+                <button
+                  onClick={() => scroll(-300)}
+                  className="border-2 border-secondary hover:border-black rounded-sm px-1 hover:scale-x-110 ease-in duration-150"
+                >
+                  <span>
+                    <svg
+                      width="24px"
+                      height="24px"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g>
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path d="M8 12l6-6v12z" />
+                      </g>
+                    </svg>
+                  </span>
+                </button>
+                <button
+                  onClick={() => scroll(300)}
+                  className="ml-4  border-2 border-secondary hover:border-black rounded-sm px-1 hover:scale-x-110 ease-in duration-150"
+                >
+                  <span>
+                    <svg
+                      width="24px"
+                      height="24px"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g>
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path d="M16 12l-6 6V6z" />
+                      </g>
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div className=" w-full relative flex justify-items-stretch">
+              <div
+                ref={scrollRef}
+                className="w-full h-full overflow-x-scroll overflow-y-hidden whitespace-nowrap scroll-smooth scrollbar-hide border-t border-secondary "
+              >
+                {filterProductsByCat(category.slug).map((product) => (
+                  <div
+                    key={product.id}
+                    className="inline-flex py-2 px-2 lg:px-4 w-[10rem] lg:w-[20rem]"
+                  >
+                    <ProductCard
+                      permalink={product.permalink}
+                      image={product.image.url}
+                      name={product.name}
+                      price={product.price.formatted_with_symbol}
+                      description={
+                        product.description &&
+                        product.description.replace(reg, "")
+                      }
+                      soldOut={product.is.sold_out}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         ))}
       </div>
     );
-  }
+  };
 
-  render() {
-    return (
-      <div className="py-5 my-5">
-        <Head>
-          <title>Collections</title>
-        </Head>
-        <div className="flex py-4 relative">
-          {/* Sidebar */}
-          <div ref={this.sidebar} className="fixed left-0 right-0 top-[7.5rem]">
-            {this.renderSidebar()}
-          </div>
-
-          {/* Main Content */}
-          <div ref={this.page} className="custom-container">
-            <div className="flex">
-              <div className="flex-2">{this.renderCollection()}</div>
-            </div>
-          </div>
-        </div>
+  return (
+    <div className="w-screen grid grid-cols-10  justify-items-stretch">
+      {/* Sidebar */}
+      <div
+        ref={sidebar}
+        className="fixed mt-[4rem] inset-y-0 left-0 lg:flex lg:col-start-1 lg:col-end-3"
+      >
+        {renderSidebar()}
       </div>
-    );
-  }
-}
+
+      {/* Main Content */}
+      <div
+        ref={page}
+        className="mt-[3rem] col-start-1 col-end-11 lg:col-start-3 lg:col-end-11 justify-items-stretch"
+      >
+        <div className="">{renderCollection()}</div>
+      </div>
+    </div>
+  );
+};
 
 export default connect((state) => state)(Collections);

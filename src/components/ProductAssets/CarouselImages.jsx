@@ -1,104 +1,148 @@
-import React, { Component } from "react";
-import { animateScroll as scroll } from "react-scroll";
-import { connect } from "react-redux";
+// import React, { useState, useEffect } from "react";
+// import { animateScroll as scroll } from "react-scroll";
+// import { connect } from "react-redux";
 
-class CarouselImages extends Component {
-  constructor(props) {
-    super(props);
+// // class CarouselImages extends Component {
 
-    this.carouselImages = [];
+// //   constructor(props) {
+// //     super(props);
 
-    this.handleScroll = this.handleScroll.bind(this);
-    this.animate = this.animate.bind(this);
-  }
+// //     this.carouselImages = [];
 
-  componentDidMount() {
-    window.addEventListener("scroll", this.handleScroll);
-  }
+// //     this.handleScroll = this.handleScroll.bind(this);
+// //     this.animate = this.animate.bind(this);
+// //   }
 
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
-  }
+// //   componentDidMount() {
+// //     window.addEventListener("scroll", this.handleScroll);
+// //   }
 
-  handleScroll() {
-    window.requestAnimationFrame(this.animate);
-  }
+// //   componentWillUnmount() {
+// //     window.removeEventListener("scroll", this.handleScroll);
+// //   }
 
-  animate() {
-    const mainImages = document.querySelectorAll(".carousel-main-images");
+// //   handleScroll() {
+// //     window.requestAnimationFrame(this.animate);
+// //   }
 
-    const x = window.matchMedia("(min-width: 768px)");
-    if (!x.matches) {
-      return;
-    }
+// //   animate() {
+// //     const mainImages = document.querySelectorAll(".carousel-main-images");
 
-    this.carouselImages.forEach((image) => {
-      image && (image.style.borderColor = "#ffffff");
-    });
+// //     const x = window.matchMedia("(min-width: 768px)");
+// //     if (!x.matches) {
+// //       return;
+// //     }
 
-    for (let index = 0; index <= mainImages.length - 1; index++) {
-      // If last image is reached
-      if (
-        mainImages[mainImages.length - 1] &&
-        mainImages[mainImages.length - 1].getBoundingClientRect().top < 200
-      ) {
-        this.carouselImages[mainImages.length - 1] &&
-          (this.carouselImages[mainImages.length - 1].style.borderColor =
-            "#000000");
-        break;
-      }
+// //     this.carouselImages.forEach((image) => {
+// //       image && (image.style.borderColor = "#ffffff");
+// //     });
 
-      // Ignore the prior images
-      if (
-        mainImages[index] &&
-        mainImages[index].getBoundingClientRect().top < 175
-      ) {
-        continue;
-      }
+// //     for (let index = 0; index <= mainImages.length - 1; index++) {
+// //       // If last image is reached
+// //       if (
+// //         mainImages[mainImages.length - 1] &&
+// //         mainImages[mainImages.length - 1].getBoundingClientRect().top < 200
+// //       ) {
+// //         this.carouselImages[mainImages.length - 1] &&
+// //           (this.carouselImages[mainImages.length - 1].style.borderColor =
+// //             "#000000");
+// //         break;
+// //       }
 
-      // Darken the last image
-      this.carouselImages[index - 1] &&
-        (this.carouselImages[index - 1].style.borderColor = "#000000");
-      break;
-    }
-  }
+// //       // Ignore the prior images
+// //       if (
+// //         mainImages[index] &&
+// //         mainImages[index].getBoundingClientRect().top < 175
+// //       ) {
+// //         continue;
+// //       }
 
-  onClickImage(index) {
-    const mainImages = document.querySelectorAll(".carousel-main-images");
+// //       // Darken the last image
+// //       this.carouselImages[index - 1] &&
+// //         (this.carouselImages[index - 1].style.borderColor = "#000000");
+// //       break;
+// //     }
+// //   }
 
-    if (mainImages) {
-      const scrollDestination = mainImages[index].offsetTop - 95;
-      scroll.scrollTo(scrollDestination, {
-        smooth: "easeInOutQuint",
-      });
-    }
-  }
+// //   onClickImage(index) {
+// //     const mainImages = document.querySelectorAll(".carousel-main-images");
 
-  render() {
-    const { images } = this.props;
+// //     if (mainImages) {
+// //       const scrollDestination = mainImages[index].offsetTop - 95;
+// //       scroll.scrollTo(scrollDestination, {
+// //         smooth: "easeInOutQuint",
+// //       });
+// //     }
+// //   }
 
-    return (
-      <div className="d-flex">
-        <div className="ml-lg-3 mr-3">
-          {Array.isArray(images) &&
-            images.map((image, index) => (
-              <div
-                ref={(image) => this.carouselImages.push(image)}
-                key={`carousel-side-images-${index}`}
-                data-key={`carousel-side-images-${index}`}
-                className="h-56 w-48 mb-3 cursor-pointer"
-                onClick={this.onClickImage.bind(this, index)}
-                style={{
-                  background: `url("${image}") center center/cover`,
-                  border:
-                    index === 0 ? "2px solid #000000" : "2px solid #FFFFFF",
-                }}
-              />
-            ))}
-        </div>
-      </div>
-    );
-  }
-}
+// //   render() {
+// //     const { images } = this.props;
 
-export default connect((state) => state)(CarouselImages);
+// //     return (
+// //       <div className="flex">
+// //         <div className="mx-4">
+// //           {Array.isArray(images) &&
+// //             images.map((image, index) => (
+// //               <div
+// //                 ref={(image) => this.carouselImages.push(image)}
+// //                 key={`carousel-side-images-${index}`}
+// //                 data-key={`carousel-side-images-${index}`}
+// //                 className="h-[7rem] w-[10rem] mb-3 cursor-pointer"
+// //                 onClick={this.onClickImage.bind(this, index)}
+// //                 style={{
+// //                   background: `url(${image}) center center/cover`,
+// //                   border: index === 0 ? "2px solid #000000" : "none",
+// //                 }}
+// //               />
+// //             ))}
+// //         </div>
+// //       </div>
+// //     );
+// //   }
+// // }
+
+// // export default connect((state) => state)(CarouselImages);
+// const CarouselImages = (props) => {
+//   const [activeIndex, setActiveIndex] = useState(0);
+//   const delay = 600000;
+
+//   const carouselImages = [];
+//   const { images } = props;
+
+//   useEffect(() => {
+//     setTimeout(
+//       () =>
+//         setActiveIndex((prevIndex) =>
+//           prevIndex === props.length - 1 ? 0 : prevIndex + 1
+//         ),
+//       delay
+//     );
+
+//     return () => {};
+//   }, [props.length, activeIndex]);
+
+//   return (
+//     <div className="flex">
+//       <div className="mx-4">
+//         {Array.isArray(images) &&
+//           images.map((image, index) => (
+//             <div
+//               ref={(image) => carouselImages.push(image)}
+//               key={`carousel-side-images-${index}`}
+//               data-key={`carousel-side-images-${index}`}
+//               className="h-[7rem] w-[10rem] mb-3 cursor-pointer"
+//               onClick={() => {
+//                 setActiveIndex(index);
+//               }}
+//               style={{
+//                 background: `url(${image}) center center/cover`,
+//                 border: activeIndex === index ? "2px solid #000000" : "none",
+//               }}
+//             />
+//           ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default connect((state) => state)(CarouselImages);

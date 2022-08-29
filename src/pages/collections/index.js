@@ -3,13 +3,13 @@ import Layout from "@components/Layout/Layout";
 // import ProductList from "@components/Products/ProductList/ProductList";
 import commerce from "@libs/commerce";
 
-export async function getStaticProps() {
-  const { data: products } = await commerce.products.list();
+// export async function getStaticProps() {
+//   const { data: products } = await commerce.products.list();
 
-  return {
-    props: { products },
-  };
-}
+//   return {
+//     props: { products },
+//   };
+// }
 
 export default function Products() {
   return (

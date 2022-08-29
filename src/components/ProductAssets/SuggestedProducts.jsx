@@ -1,28 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import ProductList from "@components/Products/ProductList/ProductList";
 import { connect } from "react-redux";
 
-class SuggestedProducts extends Component {
-  render() {
-    const { products } = this.props;
+const SuggestedProducts = (props) => {
+  const { products } = props;
 
-    return (
-      <div className="custom-container py-5 my-5">
-        <div className="d-flex flex-column align-items-center mb-5 pb-4">
-          <p className="font-color-medium mb-4">Suggested products</p>
-          <p
-            className="text-center font-size-display1 mb-3 font-weight-medium"
-            style={{ maxWidth: "32rem" }}
-          >
-            You may also like to check out these products.
-          </p>
-        </div>
-        <ProductList products={products.slice(0, 4)} />
+  return (
+    <div className="w-[95vw] mx-auto py-12">
+      <div className="">
+        <p className="text-3xl font-bold mb-4">Suggested products</p>
       </div>
-    );
-  }
-}
+
+      <ProductList
+        className="grid grid-cols-1 lg:grid-cols-3 gap-10"
+        products={products.slice(0, 3)}
+      />
+    </div>
+  );
+};
 
 SuggestedProducts.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object),

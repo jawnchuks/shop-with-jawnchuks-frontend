@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import ReviewStars from "./ReviewStars";
+
 import VariantSelector from "@components/ProductAssets/VariantSelector";
-import { animateScroll as scroll } from "react-scroll";
+
 import { connect } from "react-redux";
 import { addToCart } from "@store/actions/cartActions";
 
@@ -14,7 +14,6 @@ class ProductDetail extends Component {
     };
 
     this.handleAddToCart = this.handleAddToCart.bind(this);
-    this.handleReviewClick = this.handleReviewClick.bind(this);
     this.handleSelectOption = this.handleSelectOption.bind(this);
   }
 
@@ -48,19 +47,6 @@ class ProductDetail extends Component {
   }
 
   /**
-   * Handle click to scroll to review section
-   */
-  handleReviewClick() {
-    const section = document.querySelector("#reviews");
-
-    if (section) {
-      scroll.scrollTo(section.offsetTop - 130, {
-        smooth: "easeInOutQuint",
-      });
-    }
-  }
-
-  /**
    * On selecting variant
    */
   handleSelectOption(variantGroupId, optionId) {
@@ -70,49 +56,6 @@ class ProductDetail extends Component {
         [variantGroupId]: optionId,
       },
     });
-  }
-
-  /**
-   * Get price of selected option
-   */
-  getPrice() {
-    const {
-      price: { raw: base },
-      variant_groups: variantGroups,
-    } = this.props.product;
-    const { selectedOptions } = this.state;
-
-    if (!selectedOptions || typeof selectedOptions !== "object") {
-      return base;
-    }
-
-    const options = Object.entries(selectedOptions);
-    return (
-      base +
-      options.reduce((acc, [variantGroup, option]) => {
-        const variantDetail = variantGroups.find(
-          (candidate) => candidate.id === variantGroup
-        );
-        if (!variantDetail) {
-          return acc;
-        }
-        const optionDetail = variantDetail.options.find(
-          (candidate) => candidate.id === option
-        );
-        if (!optionDetail) {
-          return acc;
-        }
-
-        return acc + optionDetail.price;
-      }, 0)
-    );
-  }
-
-  /**
-   * Get symbol of formatted price
-   */
-  getCurrencySymbol(priceFormattedWithSymbol) {
-    return priceFormattedWithSymbol.substring(1, 0);
   }
 
   /**
@@ -132,27 +75,24 @@ class ProductDetail extends Component {
       variant_groups: variantGroups,
     } = this.props.product;
     const soldOut = this.props.product.is.sold_out;
-    const priceSymbol = this.getCurrencySymbol(price.formatted_with_symbol);
     const { selectedOptions } = this.state;
     const reg = /(<([^>]+)>)/gi;
 
     return (
-      <div>
+      <div className="">
         {/* Product Summary */}
-        <div onClick={this.handleReviewClick} className="cursor-pointer">
-          <ReviewStars count={4.5} />
-        </div>
-        <p className="font-size-display3 font-family-secondary mt-2 mb-2">
+        <p className="text-2xl font-bold leading-snug -tracking-wide my-2">
           {name}
         </p>
-        <div className="mb-4 pb-3 font-size-subheader">
-          {(description || "").replace(reg, "")}
-        </div>
+
+        <span className="text-3xl font-semibold">
+          {price.formatted_with_symbol}
+        </span>
 
         {/* Product Variant */}
-        <div className="d-sm-block">
+        <div className="font-semibold ">
           <VariantSelector
-            className="mb-3"
+            className="my-4"
             variantGroups={variantGroups}
             onSelectOption={this.handleSelectOption}
             selectedOptions={selectedOptions}
@@ -160,19 +100,15 @@ class ProductDetail extends Component {
         </div>
 
         {/* Add to Cart & Price */}
-        <div className="d-flex py-4">
+        <div className=" flex py-4">
           <button
             onClick={this.handleAddToCart}
             disabled={soldOut}
-            className="h-56 bg-black font-color-white pl-3 pr-4 d-flex align-items-center flex-grow-1"
+            className="w-full font-semibold text-lg bg-black text-white border border-black hover:text-black hover:bg-white ease-in-out duration-150 px-6 py-4 flex items-center flex-grow-1"
             type="button"
           >
-            <span className="flex-grow-1 mr-3 text-center">
-              {soldOut ? "Sold out" : "Add to cart"}
-            </span>
-            <span className="border-left border-color-white pl-3">
-              {priceSymbol}
-              {this.getPrice()}
+            <span className=" mx-auto text-center">
+              {soldOut ? "Out of stock" : "Add to cart"}
             </span>
           </button>
         </div>

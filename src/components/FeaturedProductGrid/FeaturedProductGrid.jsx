@@ -1,58 +1,10 @@
 import Link from "next/link";
 import React, { useRef } from "react";
+import ProductList from "@components/Products/ProductList/ProductList";
+import { connect } from "react-redux";
 
-const FeaturedProductGrid = () => {
-  const featuredProducts = [
-    {
-      id: 1,
-      name: "nike air max",
-      discount: "45",
-      oldPrice: "50000",
-      discountPrice: "20000",
-      image: "",
-    },
-    {
-      id: 2,
-      name: "samsung",
-      discount: "45",
-      oldPrice: "50000",
-      discountPrice: "20000",
-      image: "",
-    },
-    {
-      id: 3,
-      name: "tailwind",
-      discount: "45",
-      oldPrice: "50000",
-      discountPrice: "20000",
-      image: "",
-    },
-    {
-      id: 4,
-      name: "react",
-      discount: "45",
-      oldPrice: "50000",
-      discountPrice: "20000",
-      image: "",
-    },
-    {
-      id: 5,
-      name: "iPhone 13",
-      discount: "45",
-      oldPrice: "50000",
-      discountPrice: "20000",
-      image: "",
-    },
-    {
-      id: 6,
-      name: "MacBook Pro",
-      discount: "45",
-      oldPrice: "50000",
-      discountPrice: "20000",
-      image: "",
-    },
-  ];
-
+const FeaturedProductGrid = (props) => {
+  const { products } = props;
   const ref = useRef(null);
 
   const scroll = (scrollOffset) => {
@@ -68,18 +20,42 @@ const FeaturedProductGrid = () => {
             Featured gadgets on sale
           </h3>
 
-          <div className="w-1/4 text-lg lg:text-2xl flex flex-row items-center justify-end">
+          <div className=" text-md lg:text-xl flex text-black flex-row items-center justify-end">
             <button
               onClick={() => scroll(-300)}
-              className="border border-secondary rounded-sm px-2 hover:scale-x-110 ease-in duration-150"
+              className="border-2 border-secondary hover:border-black rounded-sm px-1 hover:scale-x-110 ease-in duration-150"
             >
-              <span>&#8592;</span>
+              <span>
+                <svg
+                  width="24px"
+                  height="24px"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g>
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path d="M8 12l6-6v12z" />
+                  </g>
+                </svg>
+              </span>
             </button>
             <button
               onClick={() => scroll(300)}
-              className="ml-4 lg:ml-8 border border-secondary rounded-sm px-2 hover:scale-x-110 ease-in duration-150"
+              className="ml-4  border-2 border-secondary hover:border-black rounded-sm px-1 hover:scale-x-110 ease-in duration-150"
             >
-              <span>&#8594;</span>
+              <span>
+                <svg
+                  width="24px"
+                  height="24px"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g>
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path d="M16 12l-6 6V6z" />
+                  </g>
+                </svg>
+              </span>
             </button>
           </div>
         </div>
@@ -90,36 +66,12 @@ const FeaturedProductGrid = () => {
             ref={ref}
             className="w-full h-full overflow-x-scroll overflow-y-hidden whitespace-nowrap scroll-smooth scrollbar-hide"
           >
-            {featuredProducts.map((product, id) => (
-              <div
-                key={id}
-                className=" inline-block py-2 w-[15rem] lg:w-[25rem] "
-              >
-                <Link href="/">
-                  <a className="flex flex-col items-start justify-center px-4 mx-2">
-                    <div className="image w-full relative">
-                      <div className="bg-secondary h-[15rem] lg:h-[25rem]  hover:scale-105 ease-in-out duration-300"></div>
-                      <span className="absolute top-0 right-0 text-black text-lg">
-                        {product.discount}%
-                      </span>
-                    </div>
-                    <div className="w-full flex items-center justify-between">
-                      <p className="w-2/3 text-black font-semibold text-lg lg:text-2xl my-8 capitalize">
-                        {product.name}
-                      </p>
-                      <span className="flex-flex-col">
-                        <p className="text-black text-opacity-40 text-sm lg:text-lg line-through ">
-                          ₦{product.oldPrice}
-                        </p>
-                        <p className="text-black  text-md lg:text-xl  ">
-                          ₦{product.discountPrice}
-                        </p>
-                      </span>
-                    </div>
-                  </a>
-                </Link>
-              </div>
-            ))}
+            <div className="">
+              <ProductList
+                className="w-fit flex flex-row"
+                products={products.slice(0, 9)}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -127,4 +79,4 @@ const FeaturedProductGrid = () => {
   );
 };
 
-export default FeaturedProductGrid;
+export default connect((state) => state)(FeaturedProductGrid);
