@@ -81,7 +81,7 @@ class ProductDetail extends Component {
     return (
       <div className="">
         {/* Product Summary */}
-        <p className="text-2xl font-bold leading-snug -tracking-wide my-2">
+        <p className="text-xl lg:text-2xl font-bold leading-snug -tracking-wide my-2">
           {name}
         </p>
 

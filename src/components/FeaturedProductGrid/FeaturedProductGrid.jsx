@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React, { useRef } from "react";
 import ProductList from "@components/Products/ProductList/ProductList";
 import { connect } from "react-redux";

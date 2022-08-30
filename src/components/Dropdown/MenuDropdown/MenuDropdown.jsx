@@ -14,28 +14,28 @@ const MenuDropdown = (props) => {
       title: "All Collections",
       description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       link: "/collections",
-      image: { all },
+      image: `url(${all.src})`,
     },
     {
       id: 2,
       title: "Discount Sales",
       description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       link: "",
-      image: { all },
+      image: `url(${discount.src})`,
     },
     {
       id: 3,
       title: "Buy Gift Cards",
       description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       link: "",
-      image: { all },
+      image: `url(${giftCards.src})`,
     },
     {
       id: 4,
       title: "Gadget Repairs",
       description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       link: "",
-      image: { all },
+      image: `url(${repairs.src})`,
     },
   ];
 
@@ -44,24 +44,38 @@ const MenuDropdown = (props) => {
   return (
     <div className="relative">
       <div className="absolute h-screen inset-0 bg-black bg-opacity-30"></div>
-      <div className="absolute top-auto w-full grid grid-cols-1 lg:grid-cols-4 gap-5 justify-items-stretch lg:p-12 px-6 py-4 bg-white shadow-xl">
+      <div className="absolute top-auto w-full grid grid-cols-1 lg:grid-cols-4 gap-5 justify-items-stretch lg:p-12 px-6 py-8 bg-white shadow-xl">
+        <div className="lg:hidden  w-full flex flex-col items-start justify-start ">
+          <Link href="">
+            <a className="w-fit hover-underline-animation my-1 text-2xl uppercase font-semibold">
+              My Account
+            </a>
+          </Link>
+          <Link href="">
+            <a className="w-fit hover-underline-animation my-1 text-2xl uppercase font-semibold">
+              cart
+            </a>
+          </Link>
+
+          <span className="w-full mt-4">
+            <input
+              type="search"
+              placeholder="search"
+              name=""
+              id=""
+              className="text-2xl w-full border-b focus:outline-none border-secondary"
+            />
+          </span>
+        </div>
         {menuCategories.map((menu, id) => (
           <Link key={id} href={menu.link}>
             <a className="w-full h-full flex lg:flex-col flex-row items-start">
               <span
                 style={{
-                  background: `url(${menu.image}) center center/contain no-repeat`,
+                  background: `${menu.image} bottom center/cover no-repeat`,
                 }}
-                className="hidden lg:block lg:w-full lg:h-[12rem] h-[7rem]"
-              >
-                {/* <Image
-                  className="w-fit"
-                  src={menu.image}
-                  width={600}
-                  height={600}
-                  alt=""
-                /> */}
-              </span>
+                className="hidden lg:block lg:w-full lg:h-[12rem]"
+              ></span>
               <div className="lg:w-full flex flex-col">
                 <a className="w-fit hover-underline-animation my-1 lg:text-xl text-2xl font-extrabold">
                   {menu.title}
@@ -74,21 +88,6 @@ const MenuDropdown = (props) => {
             </a>
           </Link>
         ))}
-
-        <div className="lg:hidden border-t border-secondary w-full flex flex-col items-start justify-start py-2">
-          <Link href="">
-            <a className="w-fit hover-underline-animation my-1 text-2xl uppercase font-semibold">
-              Account
-            </a>
-          </Link>
-          <Link href="">
-            <a className="w-fit hover-underline-animation my-1 text-2xl uppercase font-semibold">
-              cart
-            </a>
-          </Link>
-
-          <button>search</button>
-        </div>
       </div>
     </div>
   );

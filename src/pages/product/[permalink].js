@@ -87,7 +87,7 @@ export default function Product(props) {
             description: "give any description here",
           }}
         >
-          <div className="py-5 my-5">
+          <div className="py-4 my-4">
             <div className="max-w-screen flex flex-col lg:flex-row gap-5 lg:px-[2rem] ">
               {/* Sidebar image */}
               <div className="hidden lg:flex sticky top-[6.5rem] w-full lg:w-1/5 items-start justify-center">
@@ -119,9 +119,6 @@ export default function Product(props) {
                     images.map((image, index) => (
                       <div
                         key={index}
-                        width={600}
-                        height={600}
-                        src={image}
                         className={
                           activeIndex === index
                             ? "w-full carousel-main-images"
@@ -130,10 +127,32 @@ export default function Product(props) {
                         alt=""
                         style={{
                           background: `url(${image})  center center/cover no-repeat`,
-                          paddingBottom: "100%",
+                          paddingBottom: "60%",
                         }}
                       />
                     ))}
+                </div>
+                <div className="block lg:hidden mt-4 w-full items-center justify-center">
+                  <div className="flex flex-row items-center justify-center">
+                    {Array.isArray(images) &&
+                      images.map((image, index) => (
+                        <div
+                          ref={(image) => mainImages.push(image)}
+                          key={index}
+                          className="h-[2rem] w-[3rem] mx-2 cursor-pointer"
+                          onClick={() => {
+                            setActiveIndex(index);
+                          }}
+                          style={{
+                            background: `url(${image}) center center/cover no-repeat`,
+                            border:
+                              activeIndex === index
+                                ? "2px solid #000000"
+                                : "none",
+                          }}
+                        />
+                      ))}
+                  </div>
                 </div>
               </div>
 

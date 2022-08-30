@@ -47,7 +47,7 @@ export default function CategoryPage({ category, products }) {
 
         <ProductList
           products={products}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-1 justify-items-stretch"
+          className="w-fit flex-wrap flex gap-10 justify-center lg:justify-start"
         />
       </div>
       <SuggestedProducts />

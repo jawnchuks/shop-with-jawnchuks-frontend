@@ -45,7 +45,7 @@ const Collections = (props) => {
       <div className="w-full hidden lg:flex flex-col px-4 lg:px-8 py-4 ">
         {categories.map((category) => (
           <div key={category.id} className="my-1">
-            <Link href={`/collection/${category.slug}`}>
+            <Link href={`/collections/${category.slug}`}>
               <a className=" flex flex-row items-center justify-between text-black">
                 <span className="hover-underline-animation text-lg font-bold capitalize ">
                   {category.name}
@@ -90,7 +90,7 @@ const Collections = (props) => {
         {categories.map((category) => (
           <div key={category.id} className="">
             <div className="flex flex-row items-center justify-between px-2 py-4">
-              <Link href={`/collection/${category.slug}`}>
+              <Link href={`/collections/${category.slug}`}>
                 <a
                   className="lg:text-2xl text-lg tracking-wide font-bold uppercase"
                   id={category.slug}

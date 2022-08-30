@@ -65,7 +65,7 @@ const Header = () => {
                 >
                   <span></span>
 
-                  <h4 className="lg:text-xl text-md ml-10 font-medium uppercase">
+                  <h4 className="hidden lg:block lg:text-xl text-md ml-10 font-medium uppercase">
                     close
                   </h4>
                 </a>
@@ -81,7 +81,7 @@ const Header = () => {
                 >
                   <span></span>
 
-                  <h4 className="lg:text-xl text-md ml-10 font-medium uppercase">
+                  <h4 className="hidden lg:block lg:text-xl text-md ml-10 font-medium uppercase">
                     menu
                   </h4>
                 </a>

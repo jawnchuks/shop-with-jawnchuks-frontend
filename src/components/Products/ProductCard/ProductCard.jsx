@@ -5,13 +5,12 @@ export default function ProductCard({
   permalink,
   image,
   name,
-  description,
   price,
   soldOut,
 }) {
   return (
     <Link href="/product/[permalink]" as={`/product/${permalink}`}>
-      <a className=" p-4 text-black hover:border hover:border-secondary hover:shadow-md  cursor-pointer flex flex-col items-start justify-start">
+      <a className="p-2 text-black border border-white hover:border hover:border-secondary hover:shadow-md  cursor-pointer flex flex-col items-start justify-start">
         <span
           className=" bg-black w-full  hover:scale-105 ease-in-out duration-300"
           style={{
@@ -24,11 +23,10 @@ export default function ProductCard({
           )}
         </span>
         <div className=" flex flex-col items-start justify-between ">
-          <span className="text-[0.7rem] lg:text-[1.1rem] leading-normal tracking-tight  my-2 font-semibold whitespace-pre-wrap">
+          <span className="text-[0.8rem] lg:text-[1.2rem] leading-tight tracking-tight mt-6 my-4 font-semibold whitespace-pre-wrap h-[6rem] lg:h-[8rem]">
             {name}
           </span>
-          {/* <p className="mb-2 font-medium">{description}</p> */}
-          <span className="text-md lg:text-xl font-bold my-2 hover-underline-animation">
+          <span className="text-lg lg:text-2xl font-extrabold my-2 hover-underline-animation">
             {price}
           </span>
         </div>

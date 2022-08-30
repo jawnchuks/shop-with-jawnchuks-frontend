@@ -10,7 +10,7 @@ const ProductList = (props) => {
     <section className="w-[95vw] mx-auto py-4">
       <div className={props.className}>
         {products.map((product) => (
-          <div key={product.id} className="py-2 w-[10rem] lg:w-[20rem]">
+          <div key={product.id} className="py-2 w-[15rem] lg:w-[25rem]">
             <ProductCard
               permalink={product.permalink}
               image={product?.image?.url}
